@@ -1,8 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
 const router = express.Router();
-
-// Get all users
 router.get('/', async (req, res) => {
   try {
     const users = await User.find();
@@ -12,12 +10,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get user by ID
+
 router.get('/:id', getUser, (req, res) => {
   res.json(res.user);
 });
 
-// Create a new user
 router.post('/', async (req, res) => {
   const user = new User({
     name: req.body.name,
@@ -34,7 +31,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Update a user
 router.put('/:id', getUser, async (req, res) => {
   if (req.body.name != null) {
     res.user.name = req.body.name;
@@ -56,8 +52,6 @@ router.put('/:id', getUser, async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
-
-// Delete a user
 router.delete('/:id', getUser, async (req, res) => {
   try {
     await res.user.deleteOne();
